@@ -1,9 +1,9 @@
 
-using System;
+namespace Project.Domain.Primitives.ValueObjects;
 
-public sealed class Email : ValueObject
-{
-    public string Address { get; }
+    public sealed class Email : ValueObject
+    {
+        public string Address { get; }
 
     public Email(string address)
     {
