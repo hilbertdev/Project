@@ -1,8 +1,9 @@
 using Project.Domain.Enums;
+using Project.Domain.Primitives;
 
 namespace Project.Domain.Models
 {
-    public class Event
+    public class Event : Entity
     {
         internal Event(
             Guid id, 
@@ -13,8 +14,8 @@ namespace Project.Domain.Models
             string eventOrganizerEmail, 
             ICollection<Organizer> organizers, 
             string eventOrganizerContact)
+            : base(id)
         {
-            Id = id;
             EventName = eventName;
             EventType = eventType;
             EventDate = DateTime.Now;
@@ -24,8 +25,6 @@ namespace Project.Domain.Models
             Organizers = organizers;
             EventOrganizerContact = eventOrganizerContact;
         }
-        
-        public Guid Id { get; set; }
         public string? EventName { get; set; }
         public EventType EventType { get; set; }
         public DateTime EventDate { get; set; }

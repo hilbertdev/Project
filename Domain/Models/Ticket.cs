@@ -1,10 +1,15 @@
 using Project.Domain.Models;
+using Project.Domain.Primitives;
 
 namespace Domain.Models
 {
-    public class Ticket
+    public class Ticket : Entity
     {
-        public int TicketId { get; set; }
+        public Ticket(Guid id) : base(id)
+        {
+            
+        }
+        
         public string? TicketName { get; set; }
         public Event? Event { get; set; }
     }
