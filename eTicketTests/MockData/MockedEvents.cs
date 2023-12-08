@@ -1,9 +1,10 @@
 
 using Application.Commands;
+using Project.Domain.Enums;
 
 public static class MockedEvents
 {
-    public static CreateEventCommand MockEvent1()
+    public static CreateEventCommand EventOrganizerEmail_Is_Empty()
     {
         return new CreateEventCommand
         {
@@ -12,6 +13,8 @@ public static class MockedEvents
             EventDescription = "Test Description",
             EventOrganizer = "Test Organizer",
             EventOrganizerEmail = "",
+            EventOrganizerContact = "Test Contact",
+            EventType = EventType.Conference
         };
     }
 

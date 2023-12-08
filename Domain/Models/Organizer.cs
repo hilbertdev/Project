@@ -27,5 +27,9 @@ namespace Project.Domain.Models
             var newEvent = new Event(id, eventName, eventType, eventLocation, eventDescription, eventOrganizerEmail, organizers, eventOrganizerContact);
             _events.Add(newEvent);
         }
+         public ICollection<Event> GetEvents()
+         {
+            return _events;
+         }
     }
 }

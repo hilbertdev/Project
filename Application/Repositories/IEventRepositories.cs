@@ -9,5 +9,10 @@ namespace Application.Repositories
         void Add(Event newEvent);
         void Update(Event newEvent);
         void Delete(Guid id);
+        Task<Event> GetByIdAsync(Guid id);
+        Task<IEnumerable<Event>> GetAllAsync();
+        Task AddAsync(Event newEvent);
+        Task UpdateAsync(Event newEvent);
+        Task DeleteAsync(Guid id);
     }
 }
