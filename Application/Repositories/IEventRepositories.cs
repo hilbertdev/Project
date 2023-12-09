@@ -5,6 +5,7 @@ namespace Application.Repositories
     public interface IEventRepository
     {
         Event GetById(Guid id);
+        Organizer GetOrganizerById(Guid id);
         IEnumerable<Event> GetAll();
         void Add(Event newEvent);
         void Update(Event newEvent);

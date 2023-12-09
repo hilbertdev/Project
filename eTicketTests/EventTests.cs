@@ -16,7 +16,7 @@ public class EventTests
         //Arrange
         var createEventCommandMock = MockedEvents.EventOrganizerEmail_Is_Empty();
         var eventRepositoryMock = new Mock<IEventRepository>();
-        
+
         //Assert
         // TODO: Add assertions
         var mapperMock = new Mock<IMapper>();
@@ -27,6 +27,24 @@ public class EventTests
         eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Never);
         mapperMock.Verify(x => x.Map<Event>(It.IsAny<CreateEventCommand>()), Times.Never);
         await Assert.ThrowsAsync<FluentValidation.ValidationException>(action);
+
+    }
+
+    [Fact]
+    public async Task CreateEvent_WhenValidation_Successful()
+    {
+        //Arrange
+        var createEventCommandMock = MockedEvents.CreateEvent_Success();
+        var eventRepositoryMock = new Mock<IEventRepository>();
+        var mapperMock = new Mock<IMapper>();
+        var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock, mapperMock: mapperMock);
+        var organizer = new Organizer(Guid.NewGuid());
+        //Act
+        await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
+
+        //Assert
+        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Once);
+        mapperMock.Verify(x => x.Map<Event>(It.IsAny<CreateEventCommand>()), Times.Once);
 
     }
 }

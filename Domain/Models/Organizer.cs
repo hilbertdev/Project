@@ -1,5 +1,6 @@
 using Project.Domain.Enums;
 using Project.Domain.Primitives;
+using Project.Domain.Primitives.ValueObjects;
 
 namespace Project.Domain.Models
 {
@@ -20,11 +21,10 @@ namespace Project.Domain.Models
             EventType eventType, 
             string eventLocation, 
             string eventDescription, 
-            string eventOrganizerEmail, 
-            ICollection<Organizer> organizers, 
+            Email? eventOrganizerEmail, 
             string eventOrganizerContact)
         {
-            var newEvent = new Event(id, eventName, eventType, eventLocation, eventDescription, eventOrganizerEmail, organizers, eventOrganizerContact);
+            var newEvent = new Event(id, eventName, eventType, eventLocation, eventDescription, eventOrganizerEmail, eventOrganizerContact);
             _events.Add(newEvent);
         }
          public ICollection<Event> GetEvents()

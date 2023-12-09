@@ -3,6 +3,11 @@ namespace Project.Domain.Enums
     public enum EventType
     {
         // Define enum values here
-        Conference
+        Conference,
+        Concert,
+        Seminar,
+        Social,
+        Sports,
+        Other
     }
 }

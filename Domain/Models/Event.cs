@@ -1,5 +1,6 @@
 using Project.Domain.Enums;
 using Project.Domain.Primitives;
+using Project.Domain.Primitives.ValueObjects;
 
 namespace Project.Domain.Models
 {
@@ -11,8 +12,7 @@ namespace Project.Domain.Models
             EventType eventType, 
             string eventLocation, 
             string eventDescription, 
-            string eventOrganizerEmail, 
-            ICollection<Organizer> organizers, 
+            Email eventOrganizerEmail,  
             string eventOrganizerContact)
             : base(id)
         {
@@ -21,8 +21,6 @@ namespace Project.Domain.Models
             EventDate = DateTime.Now;
             EventLocation = eventLocation;
             EventDescription = eventDescription;
-            EventOrganizerEmail = eventOrganizerEmail;
-            Organizers = organizers;
             EventOrganizerContact = eventOrganizerContact;
         }
         public string? EventName { get; set; }
@@ -31,7 +29,6 @@ namespace Project.Domain.Models
         public string? EventLocation { get; set; }
         public string? EventDescription { get; set; }
         public string? EventOrganizerEmail { get; set; }
-        public ICollection<Organizer>? Organizers { get; set; }
         public string? EventOrganizerContact { get; set; }
 
     }

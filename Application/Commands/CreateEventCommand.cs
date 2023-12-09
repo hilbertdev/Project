@@ -4,6 +4,7 @@ using FluentValidation;
 using MediatR;
 using Project.Domain.Enums;
 using Project.Domain.Models;
+using Project.Domain.Primitives.ValueObjects;
 
 namespace Application.Commands
 {
@@ -14,8 +15,8 @@ namespace Application.Commands
         public EventType EventType { get; set; }
         public string? EventLocation { get; set; }
         public string? EventDescription { get; set; }
-        public string? EventOrganizerEmail { get; set; }
-        public ICollection<Organizer>? Organizers { get; set; }
+        public Email? EventOrganizerEmail { get; set; }
         public string? EventOrganizerContact { get; set; }
+        public Guid? OrganizerId { get; set; }
     }
 }

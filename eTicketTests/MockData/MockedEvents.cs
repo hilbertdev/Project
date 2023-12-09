@@ -1,6 +1,7 @@
 
 using Application.Commands;
 using Project.Domain.Enums;
+using Project.Domain.Primitives.ValueObjects;
 
 public static class MockedEvents
 {
@@ -11,22 +12,22 @@ public static class MockedEvents
             EventName = "Test Event",
             EventLocation = "Test Location",
             EventDescription = "Test Description",
-            EventOrganizer = "Test Organizer",
-            EventOrganizerEmail = "",
-            EventOrganizerContact = "Test Contact",
+            EventOrganizerEmail = new Email("test@gmail.com"),
+            EventOrganizerContact = "",
             EventType = EventType.Conference
         };
     }
 
-    public static CreateEventCommand MockEvent2()
+    public static CreateEventCommand CreateEvent_Success()
     {
         return new CreateEventCommand
         {
             EventName = "Test Event",
             EventLocation = "Test Location",
             EventDescription = "Test Description",
-            EventOrganizer = "Test Organizer",
-            EventOrganizerEmail = "",
+            EventOrganizerEmail = new Email("test@gmail.com"),
+            EventOrganizerContact = "Test Contact",
+            EventType = EventType.Seminar
         };
     }
 
@@ -37,8 +38,9 @@ public static class MockedEvents
             EventName = "Test Event",
             EventLocation = "Test Location",
             EventDescription = "Test Description",
-            EventOrganizer = "Test Organizer",
-            EventOrganizerEmail = "",
+            EventOrganizerEmail = new Email("test@gmail.com"),
+            EventOrganizerContact = "Test Contact",
+            EventType = EventType.Social
         };
     }
 }

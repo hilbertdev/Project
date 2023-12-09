@@ -14,10 +14,6 @@ namespace Application.Handlers.CommandHandler
         /// </summary>
         private readonly IEventRepository _eventRepository;
 
-        /// <summary>
-        /// The mapper used for mapping objects in the CreateEventCommand class.
-        /// </summary>
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// The validator used to validate the <see cref="CreateEventCommand"/> object.
@@ -27,7 +23,6 @@ namespace Application.Handlers.CommandHandler
         public CreateEventCommandHandler(IEventRepository eventRepository, IMapper mapper, IValidator<CreateEventCommand> validator)
         {
             _eventRepository = eventRepository;
-            _mapper = mapper;
             _validator = validator;
         }
 
@@ -40,8 +35,18 @@ namespace Application.Handlers.CommandHandler
                 throw new ValidationException(validationResult.Errors);
             }
 
-            var newEvent = _mapper.Map<Event>(request);
-            _eventRepository.Add(newEvent);
+            var organizer = _eventRepository.GetOrganizerById(request.OrganizerId!.Value);
+
+            organizer.CreateEvent(
+                request.Id,
+                request.EventName!,
+                request.EventType,
+                request.EventLocation!,
+                request.EventDescription!,
+                request.EventOrganizerEmail,
+                request.EventOrganizerContact!);
+
+            _eventRepository.Add(organizer.GetEvents().FirstOrDefault(x => x.Id == request.Id)!);
             return Task.FromResult(Unit.Value);
         }
     }
