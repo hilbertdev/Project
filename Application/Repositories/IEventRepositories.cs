@@ -15,5 +15,6 @@ namespace Application.Repositories
         Task AddAsync(Event newEvent);
         Task UpdateAsync(Event newEvent);
         Task DeleteAsync(Guid id);
+        Task<Event> GetEventById(int eventId);
     }
 }
