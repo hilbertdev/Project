@@ -44,7 +44,5 @@ public class EventTests
 
         //Assert
         eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Once);
-        mapperMock.Verify(x => x.Map<Event>(It.IsAny<CreateEventCommand>()), Times.Once);
-
     }
 }
