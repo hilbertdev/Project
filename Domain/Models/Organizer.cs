@@ -21,7 +21,7 @@ namespace Project.Domain.Models
             EventType eventType, 
             string eventLocation, 
             string eventDescription, 
-            Email? eventOrganizerEmail, 
+            Email eventOrganizerEmail, 
             string eventOrganizerContact)
         {
             var newEvent = new Event(id, eventName, eventType, eventLocation, eventDescription, eventOrganizerEmail, eventOrganizerContact);

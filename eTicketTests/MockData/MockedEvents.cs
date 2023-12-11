@@ -22,11 +22,12 @@ public static class MockedEvents
     {
         return new CreateEventCommand
         {
+            OrganizerId = Guid.NewGuid(),
             EventName = "Test Event",
             EventLocation = "Test Location",
             EventDescription = "Test Description",
             EventOrganizerEmail = new Email("test@gmail.com"),
-            EventOrganizerContact = "Test Contact",
+            EventOrganizerContact = "0734714183",
             EventType = EventType.Seminar
         };
     }

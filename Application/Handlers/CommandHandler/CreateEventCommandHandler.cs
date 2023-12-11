@@ -20,7 +20,7 @@ namespace Application.Handlers.CommandHandler
         /// </summary>
         private readonly IValidator<CreateEventCommand> _validator;
 
-        public CreateEventCommandHandler(IEventRepository eventRepository, IMapper mapper, IValidator<CreateEventCommand> validator)
+        public CreateEventCommandHandler(IEventRepository eventRepository, IValidator<CreateEventCommand> validator)
         {
             _eventRepository = eventRepository;
             _validator = validator;
@@ -35,18 +35,19 @@ namespace Application.Handlers.CommandHandler
                 throw new ValidationException(validationResult.Errors);
             }
 
-            var organizer = _eventRepository.GetOrganizerById(request.OrganizerId!.Value);
-
+            var organizer = _eventRepository.GetOrganizerById(request.OrganizerId!.Value) ?? throw new ValidationException("Please register as an organizer first.");
+           
             organizer.CreateEvent(
                 request.Id,
                 request.EventName!,
                 request.EventType,
                 request.EventLocation!,
                 request.EventDescription!,
-                request.EventOrganizerEmail,
+                request.EventOrganizerEmail!,
                 request.EventOrganizerContact!);
 
-            _eventRepository.Add(organizer.GetEvents().FirstOrDefault(x => x.Id == request.Id)!);
+
+            _eventRepository.AddAsync(organizer.GetEvents().FirstOrDefault(x => x.Id == request.Id)!);
             return Task.FromResult(Unit.Value);
         }
     }

@@ -19,7 +19,7 @@ public sealed class CreateEventCommandValidator : AbstractValidator<CreateEventC
 
         RuleFor(x => x.EventOrganizerContact)
             .NotEmpty().WithMessage("Event organizer contact is required.")
-            .MaximumLength(10).WithMessage("Event organizer contact cannot exceed 50 characters.");
+            .MaximumLength(13).WithMessage("Event organizer contact cannot exceed 13 characters.");
         
         RuleFor(x => x.EventType)
             .IsInEnum().WithMessage("Event type is not valid.");

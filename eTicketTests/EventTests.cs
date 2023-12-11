@@ -1,10 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-using Application.Commands;
 using Application.Repositories;
-using AutoMapper;
 using eTicketTests.Scrubs;
 using Moq;
 using Project.Domain.Models;
+using Project.eTicketTests.MockData;
 
 namespace eTicketTests;
 
@@ -19,13 +17,11 @@ public class EventTests
 
         //Assert
         // TODO: Add assertions
-        var mapperMock = new Mock<IMapper>();
-        var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock, mapperMock: mapperMock);
+        var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock);
         Func<Task> action = async () => await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
 
         //Assert
         eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Never);
-        mapperMock.Verify(x => x.Map<Event>(It.IsAny<CreateEventCommand>()), Times.Never);
         await Assert.ThrowsAsync<FluentValidation.ValidationException>(action);
 
     }
@@ -36,13 +32,32 @@ public class EventTests
         //Arrange
         var createEventCommandMock = MockedEvents.CreateEvent_Success();
         var eventRepositoryMock = new Mock<IEventRepository>();
-        var mapperMock = new Mock<IMapper>();
-        var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock, mapperMock: mapperMock);
-        var organizer = new Organizer(Guid.NewGuid());
+        var organizer = MockOrganizers.CreateMockOrganizers().First();
+        eventRepositoryMock.Setup(x => x.GetOrganizerById(It.IsAny<Guid>())).Returns(organizer);
+        
+        var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock);
+        
         //Act
         await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
 
         //Assert
         eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Once);
+    }
+
+    [Fact]
+
+    public async Task CreateEvent_Failed_WhenOrganizerId_Does_Not_Exist()
+    {
+        //Arrange
+        var createEventCommandMock = MockedEvents.CreateEvent_Success();
+        var eventRepositoryMock = new Mock<IEventRepository>();
+        eventRepositoryMock.Setup(x => x.GetOrganizerById(It.IsAny<Guid>())).Returns((Organizer)null);
+        var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock);
+        //Act
+        var action = async () => await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
+
+        //Assert
+        await Assert.ThrowsAsync<FluentValidation.ValidationException>(action.Invoke);
+        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Never);
     }
 }
