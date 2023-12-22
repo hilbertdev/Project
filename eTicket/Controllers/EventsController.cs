@@ -6,6 +6,7 @@ using Project.Domain.Models;
 
 namespace eTicket.Controllers
 {
+
     public class EventsController : BaseController
     {
         private readonly IRequestHandler<GetEventQuery, Event> _getEventQueryHandler;
