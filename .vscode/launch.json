@@ -9,7 +9,19 @@
             "type": "dotnet",
             "request": "launch",
             "projectPath": "${workspaceFolder}/eTicket/eTicket.csproj"
+        },
+        {
+            "name": "C#:  eTicket Test",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/eTicket.Test/eTicket.Test.csproj",
+            "args": [
+                "test",
+                "/p:CollectCoverage=true",
+                "/p:CoverletOutputFormat=opencover",
+                "/p:CoverletOutput=./TestResults/"
+            ],
+            "console": "internalConsole"
         }
-
     ]
 }
