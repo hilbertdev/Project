@@ -1,9 +1,13 @@
 
 namespace Project.Domain.Primitives.ValueObjects;
-
     public sealed class Email : ValueObject
     {
         public string Address { get; }
+
+    public Email()
+    {
+        
+    }
 
     public Email(string address)
     {
