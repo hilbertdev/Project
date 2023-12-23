@@ -6,6 +6,10 @@ namespace Project.Domain.Models
 {
     public class Event : Entity
     {
+        public Event()
+        {
+            
+        }
         internal Event(
             Guid id, 
             string eventName, 
@@ -22,13 +26,14 @@ namespace Project.Domain.Models
             EventLocation = eventLocation;
             EventDescription = eventDescription;
             EventOrganizerContact = eventOrganizerContact;
+            EventOrganizerEmail = eventOrganizerEmail;
         }
         public string? EventName { get; set; }
         public EventType EventType { get; set; }
         public DateTime EventDate { get; set; }
         public string? EventLocation { get; set; }
         public string? EventDescription { get; set; }
-        public string? EventOrganizerEmail { get; set; }
+        public Email EventOrganizerEmail { get; set; }
         public string? EventOrganizerContact { get; set; }
 
     }
