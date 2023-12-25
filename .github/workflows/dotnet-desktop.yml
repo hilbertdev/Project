@@ -34,17 +34,17 @@ jobs:
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Install Dependencies 
-      run:  dotnet restore $env:Solution_Name
+      run:  dotnet restore Domain.sln
 
       # Build the application
     - name: Build the application
-      run: dotnet build $env:Solution_Name --configuration $env:Configuration --no-restore
+      run: dotnet build Domain.sln --configuration $env:Configuration --no-restore
       env:
         Configuration: ${{ matrix.configuration }}
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test $env:Test_Project_Path --configuration $env:Configuration --no-build
+      run: dotnet test eTicketTests/eTicketTests.csproj --configuration $env:Configuration --no-build
   
     
 
