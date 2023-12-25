@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest  
 
     env:
-      Solution_Name: Domain.sln                        # Replace with your solution name, i.e. MyWpfApp.sln.
+      Solution_Name: ../Domain.sln                       # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: eTicketTests/eTicketTests.csproj      # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       DOTNET_VERSION: 8.0.x                           # Replace with the .NET version you want to use, i.e. 5.0.x. 
     steps:
