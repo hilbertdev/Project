@@ -38,13 +38,13 @@ jobs:
 
       # Build the application
     - name: Build the application
-      run: dotnet build Domain.sln --configuration $env:Configuration --no-restore
+      run: dotnet build Domain.sln --configuration Release --no-restore
       env:
         Configuration: ${{ matrix.configuration }}
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test eTicketTests/eTicketTests.csproj --configuration $env:Configuration --no-build
+      run: dotnet test eTicketTests/eTicketTests.csproj --configuration Release --no-build
   
     
 
