@@ -1,7 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace eTicket.Controllers
+namespace Presentation.Base
 {
     [ApiController]
     [Route("api/[controller]")]
