@@ -2,10 +2,12 @@
 using Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Base;
 using Project.Domain.Models;
 
-namespace eTicket.Controllers
+namespace Presentation.Controllers
 {
+
     public class EventsController : BaseController
     {
         private readonly IRequestHandler<GetEventQuery, Event> _getEventQueryHandler;
