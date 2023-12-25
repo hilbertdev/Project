@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest  
 
     env:
-      Solution_Name: Domain.sln                        # Replace with your solution name, i.e. MyWpfApp.sln.
+      Solution_Name: ../Domain.sln                       # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: eTicketTests/eTicketTests.csproj      # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       DOTNET_VERSION: 8.0.x                           # Replace with the .NET version you want to use, i.e. 5.0.x. 
     steps:
@@ -34,17 +34,17 @@ jobs:
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Install Dependencies 
-      run:  dotnet restore $env:Solution_Name
+      run:  dotnet restore Domain.sln
 
       # Build the application
     - name: Build the application
-      run: dotnet build $env:Solution_Name --configuration $env:Configuration --no-restore
+      run: dotnet build Domain.sln --configuration Release --no-restore
       env:
         Configuration: ${{ matrix.configuration }}
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test $env:Test_Project_Path --configuration $env:Configuration --no-build
+      run: dotnet test eTicketTests/eTicketTests.csproj --configuration Release --no-build
   
     
 
