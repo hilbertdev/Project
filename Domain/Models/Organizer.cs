@@ -7,7 +7,7 @@ public sealed class Organizer(Guid id) : Entity(id)
 {
     private readonly List<SocialEvent> events = [];
     public string? Name { get; set; }
-    public ICollection<SocialEvent>? Events { get; set; }
+    public ICollection<Guid>? Events { get; set; }
 
     public void CreateEvent(
         Guid id,

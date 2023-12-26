@@ -1,5 +1,4 @@
 namespace Application.UseCases.SocialEvents.Queries;
-using Application.Repositories;
 using MediatR;
 using Project.Domain.Models;
 

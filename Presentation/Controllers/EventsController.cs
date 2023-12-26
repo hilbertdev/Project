@@ -1,34 +1,35 @@
+namespace Presentation.Controllers;
 
-using Application.Queries;
+using Application.UseCases.SocialEvents.Commands;
+using Application.UseCases.SocialEvents.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Base;
 using Project.Domain.Models;
 
-namespace Presentation.Controllers
+public class EventsController(IRequestHandler<GetEventQuery, SocialEvent> getEventQueryHandler,
+IRequestHandler<CreateEventCommand> createEventCommandHandler) : BaseController
 {
+    private readonly IRequestHandler<GetEventQuery, SocialEvent> getEventQueryHandler = getEventQueryHandler;
+    private readonly IRequestHandler<CreateEventCommand> createEventCommandHandler;
 
-    public class EventsController : BaseController
+    [HttpGet]
+    [Route("GetEventById")]
+    public IActionResult GetEvents([FromQuery] GetEventQuery query)
     {
-        private readonly IRequestHandler<GetEventQuery, SocialEvent> _getEventQueryHandler;
-        public EventsController(IRequestHandler<GetEventQuery, SocialEvent> getEventQueryHandler)
-        {
-            _getEventQueryHandler = getEventQueryHandler;
-        }
+        var result = this.getEventQueryHandler.Handle(query, new CancellationToken());
+        return this.Ok(result);
+    }
 
-        [HttpGet]
-        [Route("GetEventById")]
-        public IActionResult GetEvents([FromQuery] GetEventQuery query) 
-        {
-            var result = _getEventQueryHandler.Handle(query, new CancellationToken());
-            return Ok(result);
-        }
+    [HttpGet]
+    [Route("GetAllEvents")]
+    public IActionResult GetAllEvents() => this.Ok();
 
-        [HttpGet]
-        [Route("GetAllEvents")]
-        public IActionResult GetAllEvents()
-        {
-            return Ok();
-        }
+    [HttpPost]
+    [Route("CreateEvent")]
+    public IActionResult CreateEvent([FromBody] CreateEventCommand command)
+    {
+        var result = this.createEventCommandHandler.Handle(command, new CancellationToken());
+        return this.Ok(result);
     }
 }
