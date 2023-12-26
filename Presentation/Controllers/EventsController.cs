@@ -10,8 +10,8 @@ namespace Presentation.Controllers
 
     public class EventsController : BaseController
     {
-        private readonly IRequestHandler<GetEventQuery, Event> _getEventQueryHandler;
-        public EventsController(IRequestHandler<GetEventQuery, Event> getEventQueryHandler)
+        private readonly IRequestHandler<GetEventQuery, SocialEvent> _getEventQueryHandler;
+        public EventsController(IRequestHandler<GetEventQuery, SocialEvent> getEventQueryHandler)
         {
             _getEventQueryHandler = getEventQueryHandler;
         }

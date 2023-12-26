@@ -12,14 +12,14 @@ namespace Project.Infrastructure
         {
         }
 
-        public DbSet<Event> Events { get; set; }
+        public DbSet<SocialEvent> Events { get; set; }
         public DbSet<Organizer> Organizers { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         
 
         // Define your entity DbSet properties here
 
-        public void Configure(EntityTypeBuilder<Event> builder)
+        public void Configure(EntityTypeBuilder<SocialEvent> builder)
         {
             builder.Property(e => e.EventName).HasMaxLength(50).IsRequired();
             builder.Property(e => e.EventType).IsRequired();
@@ -32,7 +32,7 @@ namespace Project.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           Configure(modelBuilder.Entity<Event>());
+           Configure(modelBuilder.Entity<SocialEvent>());
         }
     }
 }

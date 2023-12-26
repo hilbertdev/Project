@@ -1,20 +1,20 @@
+namespace Application.Repositories;
+using Domain.Models;
 using Project.Domain.Models;
 
-namespace Application.Repositories
+public interface IEventRepository
 {
-    public interface IEventRepository
-    {
-        Event GetById(Guid id);
-        Organizer GetOrganizerById(Guid id);
-        IEnumerable<Event> GetAll();
-        void Add(Event newEvent);
-        void Update(Event newEvent);
-        void Delete(Guid id);
-        Task<Event> GetByIdAsync(Guid id);
-        Task<IEnumerable<Event>> GetAllAsync();
-        Task AddAsync(Event newEvent);
-        Task UpdateAsync(Event newEvent);
-        Task DeleteAsync(Guid id);
-        Task<Event> GetEventById(int eventId);
-    }
+    SocialEvent GetById(Guid id);
+    Task<Organizer> GetOrganizerById(Guid id);
+    IEnumerable<SocialEvent> GetAll();
+    void Add(SocialEvent newEvent);
+    void Update(SocialEvent newEvent);
+    void Delete(Guid id);
+    Task<SocialEvent> GetByIdAsync(Guid id);
+    Task<IEnumerable<SocialEvent>> GetAllAsync();
+    Task AddAsync(SocialEvent newEvent);
+    Task UpdateAsync(SocialEvent newEvent);
+    Task DeleteAsync(Guid id);
+    Task<SocialEvent> GetEventById(int eventId);
+    Task<Venue> GetVenueById(Guid value);
 }

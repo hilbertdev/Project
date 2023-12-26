@@ -1,16 +1,10 @@
+namespace Domain.Models;
+
 using Project.Domain.Models;
 using Project.Domain.Primitives;
 
-namespace Domain.Models
+public class Ticket(Guid id) : Entity(id)
 {
-    public class Ticket : Entity
-    {
-        public Ticket(Guid id) : base(id)
-        {
-            
-        }
-        
-        public string? TicketName { get; set; }
-        public Event? Event { get; set; }
-    }
+    public string? TicketName { get; set; }
+    public SocialEvent? Event { get; set; }
 }

@@ -1,32 +1,27 @@
-using Application.Commands;
+namespace eTicketTests.Scrubs;
 using Application.Handlers.CommandHandler;
 using Application.Repositories;
-using AutoMapper;
+using Application.UseCases.SocialEvents.Commands;
+using Application.Validation.Input;
 using FluentValidation;
 using Moq;
 
-namespace eTicketTests.Scrubs
+public class CreateEventCommandHandlerStub
 {
-    public class CreateEventCommandHandlerStub
+    private readonly Mock<IEventRepository> eventRepositoryMock = new();
+    private readonly Mock<IValidator<CreateEventCommand>> validatorMock = new();
+
+    public CreateEventCommandHandler CreateStub(Mock<IEventRepository>? eventRepositoryMock = null, Mock<IValidator<CreateEventCommand>>? validatorMock = null) => new(
+            eventRepositoryMock?.Object ?? this.eventRepositoryMock.Object,
+            validatorMock?.Object ?? this.validatorMock.Object
+        );
+
+    public CreateEventCommandHandler CreateStub(Mock<IEventRepository>? eventRepositoryMock = null)
     {
-        private readonly Mock<IEventRepository> _eventRepositoryMock = new();
-        private readonly Mock<IValidator<CreateEventCommand>> _validatorMock = new();
-
-        public CreateEventCommandHandler CreateStub(Mock<IEventRepository>? eventRepositoryMock = null, Mock<IValidator<CreateEventCommand>>? validatorMock = null)
-        {
-            return new CreateEventCommandHandler(
-                eventRepositoryMock?.Object ?? _eventRepositoryMock.Object,
-                validatorMock?.Object ?? _validatorMock.Object
-            );
-        }
-
-        public CreateEventCommandHandler CreateStub(Mock<IEventRepository>? eventRepositoryMock = null)
-        {
-            var eventValidator = new CreateEventCommandValidator();
-            return new CreateEventCommandHandler(
-                eventRepositoryMock?.Object ?? _eventRepositoryMock.Object,
-                eventValidator
-            );
-        }
+        var eventValidator = new CreateEventCommandValidator();
+        return new CreateEventCommandHandler(
+            eventRepositoryMock?.Object ?? this.eventRepositoryMock.Object,
+            eventValidator
+        );
     }
 }

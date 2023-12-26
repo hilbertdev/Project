@@ -1,35 +1,25 @@
+namespace Project.Domain.Models;
 using Project.Domain.Enums;
 using Project.Domain.Primitives;
 using Project.Domain.Primitives.ValueObjects;
 
-namespace Project.Domain.Models
+public sealed class Organizer(Guid id) : Entity(id)
 {
-    public sealed class Organizer : Entity
+    private readonly List<SocialEvent> events = [];
+    public string? Name { get; set; }
+    public ICollection<SocialEvent>? Events { get; set; }
+
+    public void CreateEvent(
+        Guid id,
+        string eventName,
+        EventType eventType,
+        Guid venueId,
+        string eventDescription,
+        Email eventOrganizerEmail,
+        string eventOrganizerContact)
     {
-        private readonly List<Event> _events;
-        public string? Name { get; set; }
-        public ICollection<Event>? Events { get; set; }
-
-        public Organizer(Guid id) : base(id)
-        {
-            _events = new List<Event>();
-        }
-
-        public void CreateEvent(
-            Guid id, 
-            string eventName,
-            EventType eventType, 
-            string eventLocation, 
-            string eventDescription, 
-            Email eventOrganizerEmail, 
-            string eventOrganizerContact)
-        {
-            var newEvent = new Event(id, eventName, eventType, eventLocation, eventDescription, eventOrganizerEmail, eventOrganizerContact);
-            _events.Add(newEvent);
-        }
-         public ICollection<Event> GetEvents()
-         {
-            return _events;
-         }
+        var newEvent = new SocialEvent(id, eventName, eventType, venueId, eventDescription, eventOrganizerEmail, eventOrganizerContact);
+        this.events.Add(newEvent);
     }
+    public ICollection<SocialEvent> GetEvents() => this.events;
 }

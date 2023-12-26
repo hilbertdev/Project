@@ -1,18 +1,19 @@
+namespace eTicketTests;
 using Application.Repositories;
+using Domain.Models;
+using eTicketTests.MockData;
 using eTicketTests.Scrubs;
 using Moq;
 using Project.Domain.Models;
 using Project.eTicketTests.MockData;
 
-namespace eTicketTests;
-
 public class EventTests
 {
     [Fact]
-    public async Task CreateEvent_WhenValidation_UnSuccessful()
+    public async Task CreateEventWhenValidationUnSuccessful()
     {
         //Arrange
-        var createEventCommandMock = MockedEvents.EventOrganizerEmail_Is_Empty();
+        var createEventCommandMock = MockedEvents.EventOrganizerEmailIsEmpty();
         var eventRepositoryMock = new Mock<IEventRepository>();
 
         //Assert
@@ -21,43 +22,64 @@ public class EventTests
         Func<Task> action = async () => await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
 
         //Assert
-        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Never);
+        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<SocialEvent>()), Times.Never);
         await Assert.ThrowsAsync<FluentValidation.ValidationException>(action);
 
     }
 
     [Fact]
-    public async Task CreateEvent_WhenValidation_Successful()
+    public async Task CreateEventWhenValidationSuccessful()
     {
         //Arrange
-        var createEventCommandMock = MockedEvents.CreateEvent_Success();
+        var createEventCommandMock = MockedEvents.CreateEventSuccess();
         var eventRepositoryMock = new Mock<IEventRepository>();
         var organizer = MockOrganizers.CreateMockOrganizers().First();
-        eventRepositoryMock.Setup(x => x.GetOrganizerById(It.IsAny<Guid>())).Returns(organizer);
-        
+        var venue = MockedVenues.CreateVenueSuccess();
+
+        eventRepositoryMock.Setup(x => x.GetVenueById(It.IsAny<Guid>())).ReturnsAsync(venue);
+        eventRepositoryMock.Setup(x => x.GetOrganizerById(It.IsAny<Guid>())).ReturnsAsync(organizer);
+
         var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock);
-        
+
         //Act
         await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
 
         //Assert
-        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Once);
+        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<SocialEvent>()), Times.Once);
     }
 
     [Fact]
 
-    public async Task CreateEvent_Failed_WhenOrganizerId_Does_Not_Exist()
+    public async Task CreateEventFailedWhenOrganizerIdDoesNotExist()
     {
         //Arrange
-        var createEventCommandMock = MockedEvents.CreateEvent_Success();
+        var createEventCommandMock = MockedEvents.CreateEventSuccess();
         var eventRepositoryMock = new Mock<IEventRepository>();
-        eventRepositoryMock.Setup(x => x.GetOrganizerById(It.IsAny<Guid>())).Returns((Organizer)null);
+        eventRepositoryMock.Setup(x => x.GetOrganizerById(It.IsAny<Guid>())).ReturnsAsync((Organizer)null);
         var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock);
         //Act
         var action = async () => await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
 
         //Assert
         await Assert.ThrowsAsync<FluentValidation.ValidationException>(action.Invoke);
-        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Event>()), Times.Never);
+        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<SocialEvent>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task CreateEventFailedWhenVenueIdDoesNotExist()
+    {
+        //Arrange
+        var createEventCommandMock = MockedEvents.CreateEventSuccess();
+        var eventRepositoryMock = new Mock<IEventRepository>();
+        var organizer = MockOrganizers.CreateMockOrganizers().First();
+        eventRepositoryMock.Setup(x => x.GetOrganizerById(It.IsAny<Guid>())).ReturnsAsync(organizer);
+        eventRepositoryMock.Setup(x => x.GetVenueById(It.IsAny<Guid>())).ReturnsAsync((Venue)null);
+        var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock);
+        //Act
+        var action = async () => await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
+
+        //Assert
+        await Assert.ThrowsAsync<FluentValidation.ValidationException>(action.Invoke);
+        eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<SocialEvent>()), Times.Never);
     }
 }

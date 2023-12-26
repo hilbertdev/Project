@@ -1,47 +1,49 @@
+namespace Project.eTicketTests.MockData;
 
-using Application.Commands;
+using Application.UseCases.SocialEvents.Commands;
 using Project.Domain.Enums;
 using Project.Domain.Primitives.ValueObjects;
 
 public static class MockedEvents
 {
-    public static CreateEventCommand EventOrganizerEmail_Is_Empty()
+    public static CreateEventCommand EventOrganizerEmailIsEmpty() => new()
     {
-        return new CreateEventCommand
-        {
-            EventName = "Test Event",
-            EventLocation = "Test Location",
-            EventDescription = "Test Description",
-            EventOrganizerEmail = new Email("test@gmail.com"),
-            EventOrganizerContact = "",
-            EventType = EventType.Conference
-        };
-    }
+        EventName = "Test Event",
+        VenueId = Guid.NewGuid(),
+        EventDescription = "Test Description",
+        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerContact = "",
+        EventType = EventType.Conference
+    };
 
-    public static CreateEventCommand CreateEvent_Success()
+    public static CreateEventCommand CreateEventSuccess() => new()
     {
-        return new CreateEventCommand
-        {
-            OrganizerId = Guid.NewGuid(),
-            EventName = "Test Event",
-            EventLocation = "Test Location",
-            EventDescription = "Test Description",
-            EventOrganizerEmail = new Email("test@gmail.com"),
-            EventOrganizerContact = "0734714183",
-            EventType = EventType.Seminar
-        };
-    }
+        OrganizerId = Guid.NewGuid(),
+        EventName = "Test Event",
+        VenueId = Guid.NewGuid(),
+        EventDescription = "Test Description",
+        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerContact = "0734714183",
+        EventType = EventType.Seminar
+    };
 
-    public static CreateEventCommand MockEvent3()
+    public static CreateEventCommand MockEvent3() => new()
     {
-        return new CreateEventCommand
-        {
-            EventName = "Test Event",
-            EventLocation = "Test Location",
-            EventDescription = "Test Description",
-            EventOrganizerEmail = new Email("test@gmail.com"),
-            EventOrganizerContact = "Test Contact",
-            EventType = EventType.Social
-        };
-    }
+        EventName = "Test Event",
+        VenueId = Guid.NewGuid(),
+        EventDescription = "Test Description",
+        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerContact = "Test Contact",
+        EventType = EventType.Social
+    };
+
+    public static CreateEventCommand VenueIdIsNullException() => new()
+    {
+        EventName = "Test Event",
+        VenueId = null,
+        EventDescription = "Test Description",
+        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerContact = "Test Contact",
+        EventType = EventType.Social
+    };
 }
