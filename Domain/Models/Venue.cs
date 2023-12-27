@@ -1,4 +1,4 @@
-namespace Domain.Models;
+namespace Project.Domain.Models;
 using Project.Domain.Primitives;
 
 public class Venue(

@@ -1,5 +1,5 @@
 namespace eTicketTests.MockData;
-using Domain.Models;
+using Project.Domain.Models;
 
 public static class MockedVenues
 {

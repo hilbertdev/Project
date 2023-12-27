@@ -1,8 +1,7 @@
 namespace eTicketTests;
-using Application.Repositories;
-using Domain.Models;
 using eTicketTests.MockData;
 using eTicketTests.Scrubs;
+using Infrastructure.Repositories;
 using Moq;
 using Project.Domain.Models;
 using Project.eTicketTests.MockData;
@@ -19,7 +18,7 @@ public class EventTests
         //Assert
         // TODO: Add assertions
         var createEventCommandHandlerStub = new CreateEventCommandHandlerStub().CreateStub(eventRepositoryMock: eventRepositoryMock);
-        Func<Task> action = async () => await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
+        async Task action() => await createEventCommandHandlerStub.Handle(createEventCommandMock, new CancellationToken());
 
         //Assert
         eventRepositoryMock.Verify(x => x.AddAsync(It.IsAny<SocialEvent>()), Times.Never);

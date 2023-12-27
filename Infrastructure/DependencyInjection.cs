@@ -1,8 +1,7 @@
-
+namespace Project.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Project.Infrastructure;
 
 
 public static class ServiceCollectionExtensions

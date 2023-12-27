@@ -1,9 +1,9 @@
 namespace eTicketTests.Scrubs;
 using Application.Handlers.CommandHandler;
-using Application.Repositories;
 using Application.UseCases.SocialEvents.Commands;
 using Application.Validation.Input;
 using FluentValidation;
+using Infrastructure.Repositories;
 using Moq;
 
 public class CreateEventCommandHandlerStub

@@ -1,6 +1,5 @@
-namespace Domain.Models;
+namespace Project.Domain.Models;
 
-using Project.Domain.Models;
 using Project.Domain.Primitives;
 
 public class Ticket(Guid id) : Entity(id)

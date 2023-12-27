@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Presentation.Base;
 using Project.Domain.Models;
 
-public class EventsController(IRequestHandler<GetEventQuery, SocialEvent> getEventQueryHandler,
+public class EventsController(
+IRequestHandler<GetEventQuery, SocialEvent> getEventQueryHandler,
 IRequestHandler<CreateEventCommand> createEventCommandHandler) : BaseController
 {
     private readonly IRequestHandler<GetEventQuery, SocialEvent> getEventQueryHandler = getEventQueryHandler;
-    private readonly IRequestHandler<CreateEventCommand> createEventCommandHandler;
+    private readonly IRequestHandler<CreateEventCommand> createEventCommandHandler = createEventCommandHandler;
 
     [HttpGet]
     [Route("GetEventById")]

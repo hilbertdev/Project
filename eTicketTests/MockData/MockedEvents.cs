@@ -11,7 +11,7 @@ public static class MockedEvents
         EventName = "Test Event",
         VenueId = Guid.NewGuid(),
         EventDescription = "Test Description",
-        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerEmail = "test@gmail.com",
         EventOrganizerContact = "",
         EventType = EventType.Conference
     };
@@ -22,7 +22,7 @@ public static class MockedEvents
         EventName = "Test Event",
         VenueId = Guid.NewGuid(),
         EventDescription = "Test Description",
-        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerEmail = "test@gmail.com",
         EventOrganizerContact = "0734714183",
         EventType = EventType.Seminar
     };
@@ -32,7 +32,7 @@ public static class MockedEvents
         EventName = "Test Event",
         VenueId = Guid.NewGuid(),
         EventDescription = "Test Description",
-        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerEmail = "test@gmail.com",
         EventOrganizerContact = "Test Contact",
         EventType = EventType.Social
     };
@@ -42,7 +42,7 @@ public static class MockedEvents
         EventName = "Test Event",
         VenueId = null,
         EventDescription = "Test Description",
-        EventOrganizerEmail = new Email("test@gmail.com"),
+        EventOrganizerEmail = "test@gmail.com",
         EventOrganizerContact = "Test Contact",
         EventType = EventType.Social
     };

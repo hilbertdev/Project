@@ -1,43 +1,33 @@
 
-namespace Project.Domain.Primitives
+namespace Project.Domain.Primitives;
+
+public abstract class Entity : IEquatable<Entity>
 {
-    public abstract class Entity : IEquatable<Entity>
+    public Guid Id { get; protected set; }
+
+    protected Entity() => this.Id = Guid.NewGuid();
+
+    protected Entity(Guid id) => this.Id = id;
+
+    public bool Equals(Entity? other)
     {
-        public Guid Id { get; protected set; }
-
-        protected Entity()
+        if (other is null)
         {
-            Id = Guid.NewGuid();
+            return false;
         }
 
-        protected Entity(Guid id)
-        {
-            Id = id;
-        }
-
-        public bool Equals(Entity? other)
-        {
-            if (other is null)
-            {
-                return false;
-            }
-
-            return ReferenceEquals(this, other) || Id.Equals(other.Id);
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj is null)
-            {
-                return false;
-            }
-
-            return ReferenceEquals(this, obj) || Equals(obj as Entity);
-        }
-
-        public override int GetHashCode()
-        {
-            return Id.GetHashCode() ^ 31;
-        }
+        return ReferenceEquals(this, other) || Id.Equals(other.Id);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+        {
+            return false;
+        }
+
+        return ReferenceEquals(this, obj) || this.Equals(obj as Entity);
+    }
+
+    public override int GetHashCode() => this.Id.GetHashCode() ^ 31;
 }

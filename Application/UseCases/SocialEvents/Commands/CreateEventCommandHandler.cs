@@ -1,9 +1,10 @@
 namespace Application.Handlers.CommandHandler;
 
-using Application.Repositories;
 using Application.UseCases.SocialEvents.Commands;
 using FluentValidation;
+using Infrastructure.Repositories;
 using MediatR;
+using Project.Domain.Primitives.ValueObjects;
 
 public class CreateEventCommandHandler(IEventRepository eventRepository, IValidator<CreateEventCommand> validator) : IRequestHandler<CreateEventCommand>
 {
@@ -36,7 +37,7 @@ public class CreateEventCommandHandler(IEventRepository eventRepository, IValida
             request.EventType,
             venue.Id,
             request.EventDescription!,
-            request.EventOrganizerEmail!,
+            new Email(request.EventOrganizerEmail!),
             request.EventOrganizerContact!);
 
         _ = this.eventRepository.AddAsync(organizer.GetEvents().FirstOrDefault(x => x.Id == request.Id)!);
